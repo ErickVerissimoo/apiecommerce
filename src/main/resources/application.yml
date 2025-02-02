@@ -1,0 +1,18 @@
+spring:
+  security:
+    oauth2:
+     resourceserver:
+      jwt:
+       issuer-uri: https://idp.example.com/issuer
+  application:
+    name: ecommerceapi
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ecommerce
+    username: erick
+    password: erick
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+logging:
+  level:
+    application: warn
