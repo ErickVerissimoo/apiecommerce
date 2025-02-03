@@ -1,5 +1,7 @@
 package com.ecommerceapi.ecommerceapi.entities;
 
+import com.ecommerceapi.ecommerceapi.entities.enums.Role;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,6 +23,7 @@ private Long id;
 @Column(unique = true)
 private String email;
 private String password;
+private Role role;
 @OneToOne
 @JoinColumn(name = "cart_id")
 private Cart cart;

@@ -1,5 +1,7 @@
 package com.ecommerceapi.ecommerceapi.entities;
 
+import com.ecommerceapi.ecommerceapi.entities.enums.Role;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,4 +18,5 @@ public class Admin {
 private Long id;
 private String email;
 private String password;
+public Role roles;
 }

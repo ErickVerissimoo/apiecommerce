@@ -3,7 +3,7 @@ services:
     image: 'postgres:latest'
     container_name: postgres_container
     environment:
-      POSTGRES_DB: mydatabase
+      POSTGRES_DB: ecomerce
       POSTGRES_PASSWORD: erick
       POSTGRES_USER: erick
     ports:
