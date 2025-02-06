@@ -1,16 +1,17 @@
 services:
-  postgres:
-    image: 'postgres:latest'
-    container_name: postgres_container
+  mariadb:
+    image: 'mariadb:latest'
+    container_name: mariadb_container
     environment:
-      POSTGRES_DB: ecomerce
-      POSTGRES_PASSWORD: erick
-      POSTGRES_USER: erick
+      MYSQL_DATABASE: ecomerce
+      MYSQL_ROOT_PASSWORD: erick
+      MYSQL_USER: erick
+      MYSQL_PASSWORD: erick
     ports:
-      - '5432:5432'
+      - '3306:3306'
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - mariadb_data:/var/lib/mysql
 
 volumes:
-  postgres_data:
+  mariadb_data:
     driver: local
