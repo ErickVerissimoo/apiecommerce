@@ -1,5 +1,9 @@
 package com.ecommerceapi.ecommerceapi.entities;
 
+import org.springframework.beans.BeanUtils;
+
+import com.ecommerceapi.ecommerceapi.dto.LoginAndRegisterDto;
+
 import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,4 +13,13 @@ import lombok.Setter;
 @Setter
 public class Admin extends User {
 
+    public Admin(LoginAndRegisterDto dto) {
+        super(dto);
+    }
+ public Admin() {
+  
+ }
+ public Admin(Costumer costumer) {
+    BeanUtils.copyProperties(costumer, this);
+ }
 }

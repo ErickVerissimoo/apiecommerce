@@ -1,5 +1,7 @@
 package com.ecommerceapi.ecommerceapi.entities;
 
+import com.ecommerceapi.ecommerceapi.dto.LoginAndRegisterDto;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
@@ -8,10 +10,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+
 @Getter
 @Setter
 public class Costumer extends User {
     
+public Costumer(LoginAndRegisterDto dto) {
+        super(dto);
+    }
+
 @OneToOne
 @JoinColumn(name = "cart_id")
 private Cart cart;

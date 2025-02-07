@@ -4,11 +4,8 @@ import com.ecommerceapi.ecommerceapi.entities.enums.Role;
 import com.ecommerceapi.ecommerceapi.interfaces.JwtService;
 
 public class JwtServiceFactory {
-public static JwtService getJwtService(String token) {
+public static JwtService getJwtService(Role role) {
     
-    if(user.getRoles().contains(Role.ADMIN)){
-return new AdminJwtService();
-    }
-    return new CostumerJwtService(); 
+    return role == Role.USER? new CostumerJwtService(): new AdminJwtService();
 }
 }

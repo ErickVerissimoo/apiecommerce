@@ -1,15 +1,14 @@
 package com.ecommerceapi.ecommerceapi.service;
 
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import com.ecommerceapi.ecommerceapi.dto.LoginAndRegisterDto;
 import com.ecommerceapi.ecommerceapi.entities.User;
+import com.ecommerceapi.ecommerceapi.entities.enums.Role;
 import com.ecommerceapi.ecommerceapi.interfaces.AuthService;
 import com.ecommerceapi.ecommerceapi.interfaces.JwtService;
 import com.ecommerceapi.ecommerceapi.repositories.UserRepository;
@@ -24,9 +23,8 @@ public class AuthServiceImpl implements AuthService {
     private final AuthenticationManager manager;
     
 @Override
-public String login(User user) {
-    var usor = repository.findOne(Example.of(user, ExampleMatcher.matching()
-    .withStringMatcher(StringMatcher.EXACT))).orElseThrow(EntityNotFoundException::new);
+public String login(LoginAndRegisterDto dto) {
+    var usor = repository.findByEmail(dto.email()).orElseThrow(EntityNotFoundException::new);
     Authentication authentication = manager.authenticate( new UsernamePasswordAuthenticationToken(usor.getEmail(), usor.getPassword()));
     
     SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -43,7 +41,7 @@ throw new EntityExistsException();
 }
 
 private String generateToken(User user){
-JwtService service = JwtServiceFactory.getJwtService(user);
+JwtService service = JwtServiceFactory.getJwtService(Role.USER);
 return service.generateToken(user.getEmail());
 }
 }

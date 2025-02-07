@@ -2,10 +2,12 @@ package com.ecommerceapi.ecommerceapi.service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.ecommerceapi.ecommerceapi.entities.enums.Role;
 import com.ecommerceapi.ecommerceapi.interfaces.JwtService;
 
 public class CostumerJwtService implements JwtService {
@@ -18,29 +20,28 @@ public class CostumerJwtService implements JwtService {
         instant.set(Instant.now());
         return JWT.create()
         .withSubject(email).withIssuedAt(instant.get())
+        .withClaim("role", List.of(Role.USER))
         .withIssuer("jwt service").withExpiresAt(instant.get().plus(15, ChronoUnit.MINUTES))
         .sign(algorithm);
     }
 
-private String getEmail(String token) {
-    
-    return JWT.decode(token).getSubject();
-}
 @Override
 public boolean isTokenExpired(String token) {
     return JWT.decode(token).getExpiresAtAsInstant().isBefore(instant.get()) || token.isEmpty();
 }
 @Override
 public boolean isTokenValid(String token) {
-    String email = getEmail(token);
-    return JWT.require(algorithm).withSubject(email)
+
+    return JWT.require(algorithm)
     .withIssuer("jwt service")
-    .build().verify(token) != null && isTokenExpired(token);
+    .build().verify(token) != null&& isTokenExpired(token);
 }
 @Override
 public String extractEmail(String token)throws IllegalArgumentException {
-    if(isTokenValid(token))
-    return getEmail(token);
-    throw new IllegalArgumentException("Token ilegal");
+   return JWT.require(algorithm)
+   .build()
+   .verify(token)
+   .getSubject();
+    
 }
 }

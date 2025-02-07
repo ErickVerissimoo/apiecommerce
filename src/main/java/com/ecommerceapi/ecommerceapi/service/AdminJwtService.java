@@ -33,6 +33,7 @@ throw new IllegalArgumentException("Email inválido");
     }
 
 instant.set(Instant.now());
+
     return JWT.create().withClaim("role", List.of(Role.ADMIN.name(), Role.USER.name()))
     .withSubject(email).withExpiresAt(instant.get().plus(15, ChronoUnit.MINUTES))
     .withIssuedAt(instant.get())
@@ -40,12 +41,15 @@ instant.set(Instant.now());
 }
 @Override
 public boolean isTokenExpired(String token) {
-    // TODO Auto-generated method stub
+    
     return false;
 }
 @Override
 public boolean isTokenValid(String token) {
-    // TODO Auto-generated method stub
-    return false;
+
+    return JWT.require(algorithm)
+    .build()
+    .verify(token)
+    != null;
 }
 }
