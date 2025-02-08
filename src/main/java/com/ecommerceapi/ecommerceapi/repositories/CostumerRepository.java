@@ -7,13 +7,13 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Repository;
 
-import com.ecommerceapi.ecommerceapi.entities.Costumer;
+import com.ecommerceapi.ecommerceapi.entities.Customer;
 
 
 
 @Repository
-public interface CostumerRepository extends JpaRepository<Costumer, Long>, JpaSpecificationExecutor<Costumer> {
-Optional<Costumer> findByEmail(String email);
+public interface CostumerRepository extends JpaRepository<Customer, Long>, JpaSpecificationExecutor<Customer> {
+Optional<Customer> findByEmail(String email);
 boolean existsByEmail(String email);
-Streamable<Costumer> streamByEmail(String email);
+Streamable<Customer> streamByEmail(String email);
 }

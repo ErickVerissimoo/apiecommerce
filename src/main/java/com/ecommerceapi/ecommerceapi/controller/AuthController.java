@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.WebUtils;
 
 import com.ecommerceapi.ecommerceapi.dto.LoginAndRegisterDto;
-import com.ecommerceapi.ecommerceapi.entities.Costumer;
+import com.ecommerceapi.ecommerceapi.entities.Customer;
 import com.ecommerceapi.ecommerceapi.interfaces.AuthService;
 
 import jakarta.servlet.http.Cookie;
@@ -39,7 +39,7 @@ return ResponseEntity.accepted().build();
 }
 @PostMapping("/register")
 public ResponseEntity<Void> register(@RequestBody LoginAndRegisterDto dto) {
-    service.register(new Costumer(dto));
+    service.register(new Customer(dto));
     return ResponseEntity.noContent().build();
 }
 @PostMapping("/logout")

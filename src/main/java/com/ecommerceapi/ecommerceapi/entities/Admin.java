@@ -19,7 +19,7 @@ public class Admin extends User {
  public Admin() {
   
  }
- public Admin(Costumer costumer) {
+ public Admin(Customer costumer) {
     BeanUtils.copyProperties(costumer, this);
  }
 }

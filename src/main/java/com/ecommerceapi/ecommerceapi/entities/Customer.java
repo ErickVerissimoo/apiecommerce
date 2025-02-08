@@ -14,9 +14,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Costumer extends User {
+public class Customer extends User {
     
-public Costumer(LoginAndRegisterDto dto) {
+public Customer(LoginAndRegisterDto dto) {
         super(dto);
     }
 
