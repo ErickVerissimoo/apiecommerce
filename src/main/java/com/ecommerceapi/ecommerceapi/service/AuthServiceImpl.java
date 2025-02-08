@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 
 import com.ecommerceapi.ecommerceapi.dto.LoginAndRegisterDto;
 import com.ecommerceapi.ecommerceapi.entities.User;
-import com.ecommerceapi.ecommerceapi.entities.enums.Role;
 import com.ecommerceapi.ecommerceapi.interfaces.AuthService;
 import com.ecommerceapi.ecommerceapi.interfaces.JwtService;
 import com.ecommerceapi.ecommerceapi.repositories.UserRepository;
+import com.ecommerceapi.ecommerceapi.service.jwt.JwtServiceFactory;
 
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -40,8 +40,8 @@ throw new EntityExistsException();
     
 }
 
-private String generateToken(User user){
-JwtService service = JwtServiceFactory.getJwtService(Role.USER);
+private String generateToken(User user ){
+JwtService service = JwtServiceFactory.getJwtService(user);
 return service.generateToken(user.getEmail());
 }
 }

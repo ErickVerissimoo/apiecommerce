@@ -1,4 +1,4 @@
-package com.ecommerceapi.ecommerceapi.service;
+package com.ecommerceapi.ecommerceapi.service.jwt;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -12,7 +12,7 @@ import com.ecommerceapi.ecommerceapi.interfaces.JwtService;
 
 public class CostumerJwtService implements JwtService {
     private AtomicReference<Instant> instant;
-    private static final Algorithm algorithm = Algorithm.HMAC256("minha chave secreta e escondida");
+    private static final Algorithm algorithm = Algorithm.HMAC512("Minha chave blaster e ultra secreta".getBytes());
  
  
     @Override

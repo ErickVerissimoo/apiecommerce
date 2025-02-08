@@ -32,8 +32,9 @@ HttpServletResponse response) {
     Cookie cookie = new Cookie("JWT_COOKIE", token);
     cookie.setHttpOnly(true);
     cookie.setPath("/");
+    
     response.addCookie(cookie);
-return ResponseEntity.noContent().build();
+return ResponseEntity.accepted().build();
 
 }
 @PostMapping("/register")
@@ -49,10 +50,11 @@ Cookie cook = cookie.get();
     
     SecurityContextHolder.clearContext();
     cook.setMaxAge(0);
+    cook.setPath("/");
     response.addCookie(cook);
     return ResponseEntity.accepted().build();
     }
-return ResponseEntity.badRequest().build();
+return ResponseEntity.notFound().build();
 }
 }
 

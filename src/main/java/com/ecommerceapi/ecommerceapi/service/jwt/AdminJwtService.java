@@ -1,4 +1,4 @@
-package com.ecommerceapi.ecommerceapi.service;
+package com.ecommerceapi.ecommerceapi.service.jwt;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -9,29 +9,24 @@ import org.springframework.stereotype.Component;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.ecommerceapi.ecommerceapi.entities.User;
 import com.ecommerceapi.ecommerceapi.entities.enums.Role;
 import com.ecommerceapi.ecommerceapi.interfaces.JwtService;
-
-import lombok.Setter;
 @Component
 public class AdminJwtService implements JwtService{
-    @Setter
-    private User user;
+   
 
     private static final Algorithm algorithm = Algorithm.HMAC512("Minha chave blaster e ultra secreta".getBytes());
     private AtomicReference<Instant> instant;
     @Override
-public String extractEmail(String email) throws IllegalArgumentException {
+public String extractEmail(String token) throws IllegalArgumentException {
     
-    return null;
+    return JWT.require(algorithm)
+    .build().verify(token)
+    .getSubject();
 }
 @Override
 public String generateToken(String email) {
-    if(!email.contains("admin")){
-throw new IllegalArgumentException("Email inválido");
-    }
-
+  
 instant.set(Instant.now());
 
     return JWT.create().withClaim("role", List.of(Role.ADMIN.name(), Role.USER.name()))
@@ -42,7 +37,8 @@ instant.set(Instant.now());
 @Override
 public boolean isTokenExpired(String token) {
     
-    return false;
+    return JWT.decode(token)
+    .getExpiresAtAsInstant().isBefore(instant.get());
 }
 @Override
 public boolean isTokenValid(String token) {
@@ -50,6 +46,6 @@ public boolean isTokenValid(String token) {
     return JWT.require(algorithm)
     .build()
     .verify(token)
-    != null;
+    != null && isTokenExpired(token);
 }
 }

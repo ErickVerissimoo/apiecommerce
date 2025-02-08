@@ -34,6 +34,9 @@ public User(LoginAndRegisterDto dto) {
     this.email=dto.email();
     this.password=dto.password();
 }
+public boolean isAdmin(){
+    return this.roles.contains(Role.ADMIN);
+}
 
 }
 
