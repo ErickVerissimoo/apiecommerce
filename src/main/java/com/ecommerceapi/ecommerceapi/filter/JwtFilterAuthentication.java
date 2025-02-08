@@ -14,7 +14,7 @@ import lombok.SneakyThrows;
 
 @RequiredArgsConstructor
 public class JwtFilterAuthentication extends OncePerRequestFilter {
-
+    private JwtServiceFactory factory;
     @SneakyThrows
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
@@ -26,7 +26,7 @@ public class JwtFilterAuthentication extends OncePerRequestFilter {
 
         var token = bearerCookie.getValue();
      
-        JwtService service = JwtServiceFactory.getJwtService(token);
+        JwtService service = factory.getJwtService(token);
         if(service.isTokenValid(token)){
             String email = service.extractEmail(token);
             request.setAttribute("email", email);

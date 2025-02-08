@@ -26,10 +26,10 @@ public String extractEmail(String token) throws IllegalArgumentException {
 }
 @Override
 public String generateToken(String email) {
-  
+  instant = new AtomicReference<>();
 instant.set(Instant.now());
 
-    return JWT.create().withClaim("role", List.of(Role.ADMIN.name(), Role.USER.name()))
+    return JWT.create().withClaim("role", List.of(Role.ADMIN.toString(), Role.USER.toString()))
     .withSubject(email).withExpiresAt(instant.get().plus(15, ChronoUnit.MINUTES))
     .withIssuedAt(instant.get())
     .withIssuer("admin jwt service").sign(algorithm);

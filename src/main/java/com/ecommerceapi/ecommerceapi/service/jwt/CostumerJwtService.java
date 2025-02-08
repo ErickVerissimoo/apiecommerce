@@ -17,10 +17,11 @@ public class CostumerJwtService implements JwtService {
  
     @Override
     public String generateToken(String email) {
+        instant = new AtomicReference<>();
         instant.set(Instant.now());
         return JWT.create()
         .withSubject(email).withIssuedAt(instant.get())
-        .withClaim("role", List.of(Role.USER))
+        .withClaim("role", List.of(Role.USER.toString()))
         .withIssuer("jwt service").withExpiresAt(instant.get().plus(15, ChronoUnit.MINUTES))
         .sign(algorithm);
     }

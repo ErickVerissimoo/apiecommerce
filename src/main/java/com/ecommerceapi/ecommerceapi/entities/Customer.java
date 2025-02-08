@@ -1,6 +1,7 @@
 package com.ecommerceapi.ecommerceapi.entities;
 
 import com.ecommerceapi.ecommerceapi.dto.LoginAndRegisterDto;
+import com.ecommerceapi.ecommerceapi.entities.enums.Role;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -17,9 +18,10 @@ import lombok.Setter;
 public class Customer extends User {
     
 public Customer(LoginAndRegisterDto dto) {
-        super(dto);
+    super(dto);
+    getRoles().add(Role.USER);
+      
     }
-
 @OneToOne(cascade = CascadeType.ALL)
 
 private Cart cart;
@@ -33,5 +35,10 @@ public void generateCart(){
 
 
     }
+}
+@Override
+public boolean isAdmin() {
+    
+    return false;
 }
 }
