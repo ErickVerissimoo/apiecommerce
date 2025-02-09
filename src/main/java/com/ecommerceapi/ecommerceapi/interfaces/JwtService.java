@@ -1,9 +1,9 @@
 package com.ecommerceapi.ecommerceapi.interfaces;
 
+import org.springframework.security.core.Authentication;
+
 public interface JwtService {
-    
-String generateToken(String email);
-String extractEmail(String email) throws IllegalArgumentException;
-boolean isTokenValid(String token);
-boolean isTokenExpired(String token);
+String generateToken(Authentication authentication);
+String extractEmail(String token );
+
 }

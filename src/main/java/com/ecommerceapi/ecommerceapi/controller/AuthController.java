@@ -1,60 +1,37 @@
 package com.ecommerceapi.ecommerceapi.controller;
 
-import java.util.Optional;
-
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.WebUtils;
 
-import com.ecommerceapi.ecommerceapi.dto.LoginAndRegisterDto;
-import com.ecommerceapi.ecommerceapi.entities.Customer;
+import com.ecommerceapi.ecommerceapi.dto.LoginRequest;
 import com.ecommerceapi.ecommerceapi.interfaces.AuthService;
 
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/auth")
+@Validated
 public class AuthController {
     private final AuthService service;
-    
     @PostMapping("/login")
-public ResponseEntity<Void> login(@RequestBody LoginAndRegisterDto dto,
-HttpServletResponse response) {
-    String token = service.login(dto);
-    Cookie cookie = new Cookie("JWT_COOKIE", token);
-    cookie.setHttpOnly(true);
-    cookie.setPath("/");
-    
-    response.addCookie(cookie);
-return ResponseEntity.accepted().build();
-
+    public ResponseEntity<String> login(@RequestBody LoginRequest dto) {
+        
+    return  ResponseEntity.accepted()
+    .header(HttpHeaders.AUTHORIZATION, service.login(dto)).build();
 }
 @PostMapping("/register")
-public ResponseEntity<Void> register(@RequestBody LoginAndRegisterDto dto) {
-    service.register(new Customer(dto));
-    return ResponseEntity.noContent().build();
+public ResponseEntity<Void> register(@RequestBody LoginRequest dto) {
+    service.register(dto);
+    return ResponseEntity
+    .noContent()
+    .build();
 }
-@PostMapping("/logout")
-public ResponseEntity<Void> name(HttpServletResponse response, HttpServletRequest request) {
-    var cookie = Optional.ofNullable(WebUtils.getCookie(request, "JWT_COOKIE"));
-    if( cookie.isPresent()){
-Cookie cook = cookie.get();
-    
-    SecurityContextHolder.clearContext();
-    cook.setMaxAge(0);
-    cook.setPath("/");
-    response.addCookie(cook);
-    return ResponseEntity.accepted().build();
-    }
-return ResponseEntity.notFound().build();
-}
+
 }
 

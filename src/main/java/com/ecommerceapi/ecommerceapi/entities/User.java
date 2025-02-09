@@ -3,7 +3,7 @@ package com.ecommerceapi.ecommerceapi.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ecommerceapi.ecommerceapi.dto.LoginAndRegisterDto;
+import com.ecommerceapi.ecommerceapi.dto.LoginRequest;
 import com.ecommerceapi.ecommerceapi.entities.enums.Role;
 
 import jakarta.persistence.CollectionTable;
@@ -36,10 +36,10 @@ private String password;
 @CollectionTable(name = "roles")
 
 private List<Role> roles = new ArrayList<>();
-public User(LoginAndRegisterDto dto) {
+public User(LoginRequest dto){
     this();
-    this.email=dto.email();
-    this.password=dto.password();
+this.email=dto.email();
+this.password=dto.password();
 }
 public User() {
     roles.add(Role.USER);
