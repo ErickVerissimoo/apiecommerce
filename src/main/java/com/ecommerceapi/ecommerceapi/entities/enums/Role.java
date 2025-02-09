@@ -3,10 +3,10 @@ package com.ecommerceapi.ecommerceapi.entities.enums;
 import lombok.Getter;
 
 public enum Role {
-USER(1),ADMIN(2);
+USER("USER"),ADMIN("ADMIN");
 @Getter
-public int role;
-Role(int role) {
+public String role;
+Role(String role) {
     this.role=role;
 }
 

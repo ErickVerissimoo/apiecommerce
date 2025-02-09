@@ -13,6 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 public class LogginAspect {
     @Before("execution(* com.ecommerceapi.ecommerceapi..*.*(..))")
     public void loggin(JoinPoint joinpoint) {
-    log.info(" o método" + joinpoint.getSignature().toShortString() + " está prestes a ser chamado");
+    log.info(" o método " + joinpoint.getSignature().toShortString() + " está prestes a ser chamado");
 }
 }

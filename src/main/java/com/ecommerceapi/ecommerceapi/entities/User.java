@@ -1,7 +1,7 @@
 package com.ecommerceapi.ecommerceapi.entities;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.ecommerceapi.ecommerceapi.dto.LoginRequest;
 import com.ecommerceapi.ecommerceapi.entities.enums.Role;
@@ -26,16 +26,16 @@ import lombok.Setter;
 public abstract class User   {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Getter
+    
 private Long id;
 @Column(unique = true)
 private String email;
 private String password;
 @ElementCollection(targetClass = Role.class)
-@Enumerated(EnumType.ORDINAL)
+@Enumerated(EnumType.STRING)
 @CollectionTable(name = "roles")
 
-private List<Role> roles = new ArrayList<>();
+private Set<Role> roles = new HashSet<>();
 public User(LoginRequest dto){
     this();
 this.email=dto.email();
