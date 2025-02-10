@@ -1,5 +1,6 @@
 package com.ecommerceapi.ecommerceapi.entities;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import com.ecommerceapi.ecommerceapi.dto.LoginRequest;
@@ -41,6 +42,7 @@ this.email=dto.email();
 this.password=dto.password();
 }
 public User() {
+    roles =  new HashSet<>();
     roles.add(Role.USER);
 }public abstract boolean isAdmin();
 
