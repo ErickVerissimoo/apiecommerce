@@ -1,6 +1,5 @@
 package com.ecommerceapi.ecommerceapi.entities;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import com.ecommerceapi.ecommerceapi.dto.LoginRequest;
@@ -35,7 +34,7 @@ private String password;
 @Enumerated(EnumType.STRING)
 @CollectionTable(name = "roles")
 
-private Set<Role> roles = new HashSet<>();
+private Set<Role> roles;
 public User(LoginRequest dto){
     this();
 this.email=dto.email();

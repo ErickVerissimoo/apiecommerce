@@ -6,8 +6,6 @@ import java.security.interfaces.RSAPublicKey;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
@@ -45,7 +43,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) {
         return http.csrf(CsrfConfigurer::disable)   
              .authorizeHttpRequests(c -> c.requestMatchers("/auth/**", "/public/**").permitAll()
-             .anyRequest().authenticated())
+             .requestMatchers("/admin/**").hasRole("ADMIN")   .anyRequest().authenticated()
+             )
 
         .httpBasic(HttpBasicConfigurer::disable)
         .formLogin(FormLoginConfigurer::disable)
@@ -66,9 +65,11 @@ public class SecurityConfig {
 
    @Bean
    public JwtEncoder encoder(){
+    
     JWK jwk = new RSAKey.Builder(publick).privateKey(privatek)
     .build();
     var jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
+    
     return new NimbusJwtEncoder(jwks);
    }
  
@@ -81,9 +82,5 @@ public class SecurityConfig {
     authentication.setJwtGrantedAuthoritiesConverter(conv);
     return authentication;
    }
-   @Bean
-   @SneakyThrows
-   public AuthenticationManager manager(AuthenticationConfiguration conf) {
-    return conf.getAuthenticationManager();
-   }
+   
 }

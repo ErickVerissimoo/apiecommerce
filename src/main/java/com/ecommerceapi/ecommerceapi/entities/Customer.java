@@ -1,38 +1,28 @@
 package com.ecommerceapi.ecommerceapi.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.ecommerceapi.ecommerceapi.dto.LoginRequest;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.PrePersist;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@NoArgsConstructor
 @Getter
 @Setter
 public class Customer extends User {
     
-
-@OneToOne(cascade = CascadeType.ALL)
-
-private Cart cart;
-
-@PrePersist
-public void generateCart(){
-    if(cart ==null){
-        Cart carro = new Cart();
-        cart=carro;
-        cart.setCostumer(this);
-
-
-    }
-}
+@OneToMany(mappedBy = "customer", cascade = {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.REMOVE,CascadeType.MERGE})
+private Set<Order> orders;
 public Customer(LoginRequest dto) {
     super(dto);
+}
+public Customer() {
+    orders = new HashSet<>();
 }
 @Override
 public boolean isAdmin() {
